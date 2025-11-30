@@ -52,6 +52,7 @@
 .card-content__pricing {
   font-weight: bold;
   flex-grow: 1;
+  align-content: end;
 }
 
 .card-content__cta {
