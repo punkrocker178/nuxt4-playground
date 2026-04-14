@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { DisplayStock } from '~/models/displayStock';
 const stocks = ref<DisplayStock[]>([]);
+const stockState = useState('stocks', () => stocks.value);
 
 onMounted(async () => {
   console.log('StockDashboard component mounted');
@@ -18,6 +19,7 @@ async function getStocks() {
       date: useFormatDate(stockData.LastTradeDate),
     });
   });
+  stockState.value = stocks.value;
 }
 </script>
 <template>
@@ -26,5 +28,7 @@ async function getStocks() {
     <div class="stocks-container">
       <StockCard v-for="stock in stocks" :key="stock.symbol" v-bind="stock" />
     </div>
+
+    <email-subscription v-if="stocks.length > 0"></email-subscription>
   </div>
 </template>
