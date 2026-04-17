@@ -2,7 +2,7 @@
 import '@mdi/font/css/materialdesignicons.css';
 
 import 'vuetify/styles';
-import { createVuetify } from 'vuetify'
+import { createVuetify } from 'vuetify';
 
 export default defineNuxtPlugin((app) => {
   const vuetify = createVuetify({
@@ -10,6 +10,6 @@ export default defineNuxtPlugin((app) => {
       defaultSet: 'mdi',
     },
     ssr: true
-  })
-  app.vueApp.use(vuetify)
-})
+  });
+  app.vueApp.use(vuetify);
+});

@@ -5,12 +5,12 @@
 </template>
 
 <script setup lang="ts">
-definePageMeta({ ssr: false })
+definePageMeta({ ssr: false });
 
 function handleLogin(email: string, password: string) {
-  console.log('Login attempt:', email, password)
+  console.log('Login attempt:', email, password);
   // nuxt link to index page after login
-  navigateTo('/') 
+  navigateTo('/'); 
 }
 </script>
 

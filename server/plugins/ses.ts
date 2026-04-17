@@ -1,4 +1,4 @@
-import { SESClient } from '@aws-sdk/client-ses'
+import { SESClient } from '@aws-sdk/client-ses';
 
 declare module 'h3' {
   interface H3EventContext {
@@ -7,7 +7,7 @@ declare module 'h3' {
 }
 
 export default defineNitroPlugin((nitroApp) => {
-  const config = useRuntimeConfig()
+  const config = useRuntimeConfig();
 
   const ses = new SESClient({
     region: config.awsRegion,
@@ -15,9 +15,9 @@ export default defineNitroPlugin((nitroApp) => {
       accessKeyId: config.awsAccessKeyId,
       secretAccessKey: config.awsSecretAccessKey,
     },
-  })
+  });
 
   nitroApp.hooks.hook('request', (event) => {
-    event.context.ses = ses
-  })
-})
+    event.context.ses = ses;
+  });
+});

@@ -29,6 +29,6 @@ async function getStocks() {
       <StockCard v-for="stock in stocks" :key="stock.symbol" v-bind="stock" />
     </div>
 
-    <email-subscription v-if="stocks.length > 0"></email-subscription>
+    <email-subscription v-if="stocks.length > 0"/>
   </div>
 </template>

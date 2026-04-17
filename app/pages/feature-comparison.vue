@@ -4,7 +4,7 @@
       <v-app-bar-title>My App</v-app-bar-title>
     </v-app-bar>
 
-    <div class="app-bar-offset"></div>
+    <div class="app-bar-offset"/>
 
     <h1>Hello, Steve</h1>
     <p>Let's learn Nuxt</p>

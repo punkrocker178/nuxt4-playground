@@ -1,4 +1,4 @@
-import { SendEmailCommand } from '@aws-sdk/client-ses'
+import { SendEmailCommand } from '@aws-sdk/client-ses';
 
 interface SendMailBody {
   to: string | string[]
@@ -8,17 +8,17 @@ interface SendMailBody {
 }
 
 export default defineEventHandler(async (event) => {
-  const body = await readBody<SendMailBody>(event)
+  const body = await readBody<SendMailBody>(event);
 
   if (!body.to || !body.subject || (!body.html && !body.text)) {
     throw createError({
       statusCode: 400,
       message: 'Missing required fields: to, subject, and html or text',
-    })
+    });
   }
 
-  const config = useRuntimeConfig(event)
-  const toAddresses = Array.isArray(body.to) ? body.to : [body.to]
+  const config = useRuntimeConfig(event);
+  const toAddresses = Array.isArray(body.to) ? body.to : [body.to];
 
   const command = new SendEmailCommand({
     Source: config.sesFromAddress,
@@ -39,9 +39,9 @@ export default defineEventHandler(async (event) => {
         }),
       },
     },
-  })
+  });
 
-  await event.context.ses.send(command)
+  await event.context.ses.send(command);
 
-  return { success: true }
-})
+  return { success: true };
+});

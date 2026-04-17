@@ -57,38 +57,38 @@
 <script setup lang="ts">
 const emit = defineEmits<{
   login: [email: string, password: string]
-}>()
+}>();
 
-const formRef = ref<{ validate: () => Promise<{ valid: boolean }> } | null>(null)
-const email = ref('')
-const password = ref('')
-const showPassword = ref(false)
-const isLoading = ref(false)
-const errorMessage = ref('')
+const formRef = ref<{ validate: () => Promise<{ valid: boolean }> } | null>(null);
+const email = ref('');
+const password = ref('');
+const showPassword = ref(false);
+const isLoading = ref(false);
+const errorMessage = ref('');
 
 const emailRules = [
   (v: string) => !!v || 'Email is required',
   (v: string) => /.+@.+\..+/.test(v) || 'Email must be valid',
-]
+];
 
 const passwordRules = [
   (v: string) => !!v || 'Password is required',
   (v: string) => v.length >= 8 || 'Password must be at least 8 characters',
-]
+];
 
 async function handleSubmit() {
-  if (!formRef.value) return
+  if (!formRef.value) return;
 
-  const { valid } = await formRef.value.validate()
-  if (!valid) return
+  const { valid } = await formRef.value.validate();
+  if (!valid) return;
 
-  isLoading.value = true
-  errorMessage.value = ''
+  isLoading.value = true;
+  errorMessage.value = '';
 
   try {
-    emit('login', email.value, password.value)
+    emit('login', email.value, password.value);
   } finally {
-    isLoading.value = false
+    isLoading.value = false;
   }
 }
 </script>

@@ -1,4 +1,4 @@
-import type { RealTimeStockPriceResponse } from '#shared/models/stock'
+import type { RealTimeStockPriceResponse } from '#shared/models/stock';
 
 export default defineEventHandler(async (event) => {
   const { symbol } = getQuery(event);

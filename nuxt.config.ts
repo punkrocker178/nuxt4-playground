@@ -1,9 +1,9 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-import { transformAssetUrls } from 'vite-plugin-vuetify'
-import vuetify from 'vite-plugin-vuetify'
+import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify';
 
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
+
   runtimeConfig: {
     // Override via NUXT_AWS_REGION, NUXT_AWS_ACCESS_KEY_ID, etc. in .env
     awsRegion: 'ap-southeast-1',
@@ -11,10 +11,13 @@ export default defineNuxtConfig({
     awsSecretAccessKey: '',
     sesFromAddress: '',
   },
+
   devtools: { enabled: true },
+
   build: { 
     transpile: ['vuetify'] 
   },
+
   vite: {
     plugins: [
       vuetify({ autoImport: true }),
@@ -25,4 +28,6 @@ export default defineNuxtConfig({
       },
     },
   },
-})
+
+  modules: ['@nuxt/eslint'],
+});

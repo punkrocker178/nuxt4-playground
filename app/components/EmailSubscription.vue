@@ -18,11 +18,11 @@ function submitEmail() {
     <p>Subscribe to the stock market updates</p>
     <v-form @submit.prevent="submitEmail">
       <v-text-field
+        v-model="emailFormControl"
         label="Email Address"
         type="email"
-        v-model="emailFormControl"
         required
-      ></v-text-field>
+      />
       <v-btn color="primary" class="mt-4" type="submit">Subscribe</v-btn>
     </v-form>
   </div>
