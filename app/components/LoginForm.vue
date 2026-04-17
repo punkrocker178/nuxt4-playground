@@ -6,6 +6,7 @@
       <v-form ref="formRef" @submit.prevent="handleSubmit">
         <v-text-field
           v-model="email"
+          name="email"
           label="Email"
           type="email"
           prepend-inner-icon="mdi-email-outline"
@@ -16,12 +17,14 @@
 
         <v-text-field
           v-model="password"
+          name="password"
           label="Password"
           :type="showPassword ? 'text' : 'password'"
           prepend-inner-icon="mdi-lock-outline"
           :append-inner-icon="showPassword ? 'mdi-eye-off' : 'mdi-eye'"
           :rules="passwordRules"
           variant="outlined"
+          data-testid="password-toggle"
           @click:append-inner="showPassword = !showPassword"
         />
 
@@ -42,6 +45,7 @@
           size="large"
           class="mt-4"
           :loading="isLoading"
+          data-testid="login-submit"
         >
           Sign In
         </v-btn>
