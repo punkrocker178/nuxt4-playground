@@ -1,5 +1,5 @@
 <template>
-  <div class="login-page">
+  <div class="login-page mb-16">
     <LoginForm @login="handleLogin" />
   </div>
 </template>
@@ -19,6 +19,6 @@ function handleLogin(email: string, password: string) {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  min-height: 100%;
 }
 </style>
