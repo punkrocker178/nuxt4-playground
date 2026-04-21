@@ -52,6 +52,11 @@ async function getStocks() {
     isLoading.value = false;
   }
 }
+
+function removeStock(symbol: string) {
+  stockList.value = stockList.value.filter((s) => s !== symbol);
+  getStocks();
+}
 </script>
 <template>
   <div>
@@ -64,7 +69,7 @@ async function getStocks() {
       <div v-if="isLoading" class="text-center">
         <v-progress-circular indeterminate color="primary" class="my-3"/>
       </div>
-      <StockCard v-for="stock in stocks" :key="stock.symbol" v-bind="stock"/>
+      <StockCard v-for="stock in stocks" :key="stock.symbol" v-bind="stock" @delete="removeStock"/>
     </div>
 
     <div class="mt-5">
