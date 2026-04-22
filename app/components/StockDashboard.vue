@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import type { Company } from '~/models/companies';
 import type { DisplayStock } from '~/models/displayStock';
-const stocks = ref<DisplayStock[]>([]);
-const stockState = useState('stocks', () => stocks.value);
+
+const stockState = useState<DisplayStock[]>('stocks', () => []);
 const isLoading = ref(false);
 const stockList = ref(['DGW', 'MWG', 'VGC', 'SSI', 'TCX', 'VHM', 'VNM', 'FUETCC50', 'FUEVFVND', 'E1VFVN30']);
 const stockParameter = computed(() => stockList.value.join(';'));
 const stockControl = ref('');
-onMounted(async () => {
+
+onServerPrefetch(async () => {
   await getStocks();
 });
 
@@ -26,6 +27,8 @@ function addStock(symbol: string) {
     } else {
       console.warn(`Stock ${symbol} is already in the list.`);
     }
+
+    stockControl.value = '';
   } else {
     console.error(`Stock symbol ${symbol} not found in company list.`);
   }
@@ -34,18 +37,20 @@ function addStock(symbol: string) {
 async function getStocks() {
   isLoading.value = true;
   try {
+    if (!stockParameter.value) {
+      console.warn('No stock symbols to fetch.');
+      stockState.value = [];
+      return;
+    }
+
     const data = await useStocks().fetchStockPrice(stockParameter.value);
-    stocks.value = [];
-    Object.entries(data).forEach(([symbol, stockData]) => {
-      stocks.value.push({
-        symbol,
-        price: stockData.Price,
-        change: stockData.Price - stockData.RefPrice,
-        changePercent: stockData.RefPrice !== 0 ? ((stockData.Price - stockData.RefPrice) / stockData.RefPrice) * 100 : undefined,
-        date: useFormatDate(stockData.LastTradeDate),
-      });
-    });
-    stockState.value = stocks.value;
+    stockState.value = Object.entries(data).map(([symbol, stockData]) => ({
+      symbol,
+      price: stockData.Price,
+      change: stockData.Price - stockData.RefPrice,
+      changePercent: stockData.RefPrice !== 0 ? ((stockData.Price - stockData.RefPrice) / stockData.RefPrice) * 100 : undefined,
+      date: useFormatDate(stockData.LastTradeDate),
+    }));
   } catch (error) {
     console.error('Error fetching stock data:', error);
   } finally {
@@ -69,11 +74,11 @@ function removeStock(symbol: string) {
       <div v-if="isLoading" class="text-center">
         <v-progress-circular indeterminate color="primary" class="my-3"/>
       </div>
-      <StockCard v-for="stock in stocks" :key="stock.symbol" v-bind="stock" @delete="removeStock"/>
+      <StockCard v-for="stock in stockState" :key="stock.symbol" v-bind="stock" @delete="removeStock"/>
     </div>
 
     <div class="mt-5">
-      <email-subscription v-if="stocks.length > 0" />
+      <email-subscription v-if="stockState.length > 0" />
     </div>
   </div>
 </template>
